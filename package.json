@@ -1,0 +1,15 @@
+{
+  "name": "iron-tracker",
+  "version": "1.0.0",
+  "description": "Iron Tracker - Gym tracking and stats App",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "iron-tracker"
+  },
+  "author": "fdevinar",
+  "license": "ISC"
+}
