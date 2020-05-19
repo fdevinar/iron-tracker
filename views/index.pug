@@ -1,27 +1,21 @@
 head
     title Iron Tracker
 body
-    h1 Index
-    p Paragraph
+    h1 Welcome to Iron Tracker
+    p Click below to access Workouts
+
+    a(href="/new") New Exercise
+
+    - let exercise = exercises[1]
 
     ul
-        li- #[strong exercise.name]
-        li=  exercise.name
-        li= `${exercise.reps} reps`
-        li= `${exercise.sets} sets`
-        li= `${exercise.weight} kg`
-        li= `Targeted muscle/area is: ${exercise.muscle}`
-        
+    for ex in exercises
+        li #[strong #{ex.name}]
+        li #{ex.name}
+        li #{ex.reps} reps
+        li #{ex.sets} sets
+        li #{ex.weight} kg
+        li Targeted muscle/area is: #{ex.muscle}
 
 
 
-
-
-
-//- let exercise = {
-//-     name: 'Deadlift',
-//-     reps: 8,
-//-     sets: 5,
-//-     weight: 80,
-//-     muscle: 'Lower body'
-//- };
