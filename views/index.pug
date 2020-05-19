@@ -1,0 +1,27 @@
+head
+    title Iron Tracker
+body
+    h1 Index
+    p Paragraph
+
+    ul
+        li- #[strong exercise.name]
+        li=  exercise.name
+        li= `${exercise.reps} reps`
+        li= `${exercise.sets} sets`
+        li= `${exercise.weight} kg`
+        li= `Targeted muscle/area is: ${exercise.muscle}`
+        
+
+
+
+
+
+
+//- let exercise = {
+//-     name: 'Deadlift',
+//-     reps: 8,
+//-     sets: 5,
+//-     weight: 80,
+//-     muscle: 'Lower body'
+//- };
