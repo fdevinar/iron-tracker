@@ -1,0 +1,22 @@
+head
+    title Iron Tracker
+body
+
+    h2 Check Workouts Below
+
+    a(href="/workouts/new") New Exercise
+
+    - let exercise = exercises[1]
+
+    for ex in exercises
+        ul
+            li #[strong #{ex.name}]
+            li #{ex.name}
+            li #{ex.reps} reps
+            li #{ex.sets} sets
+            li #{ex.weight} kg
+            li Targeted muscle/area is: #{ex.muscle}
+            
+
+
+
