@@ -1,13 +1,17 @@
-form(action='/workouts/new', method='post' class="newForm")
+
+
+form(action='/workouts/new', method='post')
+    label(for='day') Day 
+    input#day(type='text', name='day')
     label(for='name') Name 
     input#name(type='text', name='name')
     label(for='reps') Reps 
     input#reps(type='number' name='reps')
     label(for='sets') Sets 
-    input#reps(type='number' name='sets')
+    input#sets(type='number' name='sets')
     label(for='weight') Weight 
-    input#reps(type='number' name='weight')
+    input#weight(type='number' name='weight')
     label(for='muscle') Muscle/Group 
-    input#reps(type='muscle' name='muscle')
+    input#muscle(type='muscle' name='muscle')
     submit
         button Create
