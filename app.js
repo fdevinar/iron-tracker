@@ -45,15 +45,16 @@ app.get('/workouts/new',(req, res) => {
 });
 // - CREATE
 app.post('/workouts/new',(req, res) => {
-    Exercise.create(req.body,(err, exercise) => {
-        if(err){
-            console.log(err);
-        }else{
-            console.log('Created exercise');
-            console.log(exercise);
-        }
-    });
-    res.redirect('/workouts');
+    // Exercise.create(req.body,(err, exercise) => {
+    //     if(err){
+    //         console.log(err);
+    //     }else{
+    //         console.log('Created exercise');
+    //         console.log(exercise);
+    //     }
+    // });
+    // res.redirect('/workouts');
+    res.send('POST ROUTE');
 });
 
 // SERVER START
