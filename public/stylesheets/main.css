@@ -1,0 +1,28 @@
+body {
+    background-color: ivory;
+}
+
+.exercises {
+    display: flex;
+    justify-content: space-around;
+}
+
+.day-block {
+    width: 18%;
+}
+
+.exercises-block {
+    border: 1px solid black;
+    margin: 5px;
+    padding: 5px;    
+}
+
+input {
+    color: blue;
+}
+
+input[type='Number'] {
+    width: 16%;
+}
+
+

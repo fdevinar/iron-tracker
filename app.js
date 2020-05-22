@@ -54,6 +54,17 @@ app.post('/workouts/new',(req, res) => {
     //     }
     // });
     // res.redirect('/workouts');
+    console.log(req.body);
+    if (req.body.name){
+        console.log(req.body.name);
+    }
+    if (req.body.reps){
+        console.log(req.body.reps);
+    }
+    if (req.body.weight){
+        console.log(req.body.weight);
+    }
+
     res.send('POST ROUTE');
 });
 

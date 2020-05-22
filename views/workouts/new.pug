@@ -1,27 +1,34 @@
 include ../partials/header.pug
 
-label(for='workoutName') Workout Name
-input(type='text' name='workoutName')    
-
-- let daysOfWeek = ['Monday','Tuesday','Wednesday'];
-- let exercisesPerDay = 3;
-
-each day in daysOfWeek
-    div(class=day)
-        - for (i=0; i<exercisesPerDay; i++){
-            label(for='name') Name 
-            input#name(type='text' name='name')
-            label(for='reps') Reps 
-            input#reps(type='number' name='reps')
-            label(for='sets') Sets 
-            input#sets(type='number' name='sets')
-            label(for='weight') Weight 
-            input#weight(type='number' name='weight')
-            label(for='muscle') Muscle/Group 
-            input#muscle(type='muscle' name='muscle')
-        -}
+- let daysOfWeek = ['Monday','Tuesday','Wednesday','Thursday','Friday'];
+- let exercisesPerDay = 8;
 
 
+form(action='/workouts/new' method='post')
+
+    .exercises
+        each day in daysOfWeek
+            div(class=day class='day-block')
+                h3 #{day}
+                - for (i=0; i<exercisesPerDay; i++){
+                    .exercises-block
+                        label(for='muscle') Muscle 
+                        input#muscle(type='muscle' name='muscle')
+                        br
+                        label(for='name') Name 
+                        input#name(type='text' name='name')
+                        br
+                        label(for='reps') Reps 
+                        input#reps(type='number' name='reps')
+                        
+                        label(for='sets') Sets 
+                        input#sets(type='number' name='sets')
+                        
+                        label(for='weight') Weight 
+                        input#weight(type='number' name='weight')
+                -}
+        submit
+            button Create
 
 
 
