@@ -6,8 +6,7 @@ const exerciseSchema = new mongoose.Schema({
     name: String,
     reps: Number,
     sets: Number,
-    weight: Number,
-    muscle: String
+    weight: Number
 });
 // CREATE MODEL BASED ON SCHEMA
 const Exercise = mongoose.model("Exercise", exerciseSchema);

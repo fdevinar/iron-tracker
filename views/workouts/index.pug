@@ -1,9 +1,6 @@
 include ../partials/header.pug
 
-label(for='workoutName') Workout Name
-input(type='text' name='workoutName')
-label(for='daysOfWeek') Days of Week
-input(type='text' name='daysOfWeek')
+
 
 
 h2 Check Workouts Below
@@ -15,8 +12,6 @@ for ex in exercises
         li #{ex.reps} reps
         li #{ex.sets} sets
         li #{ex.weight} kg
-        li Targeted muscle/area is: #{ex.muscle}
-
 
 
 include ../partials/footer.pug
