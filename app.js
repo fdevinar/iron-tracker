@@ -30,12 +30,11 @@ app.get('/', (req, res) => {
 // WORKOUTS
 // - INDEX
 app.get('/workouts',(req, res) => {
-    // res.send('Workout');
-    Exercise.find({},(err, exercise) => {
+    Exercise.find({},(err, exercises) => {
         if(err){
             console.log(err);
         }else{
-            res.render('workouts/index',{exercises:exercise});            
+            res.render('workouts/index',{exercises:exercises});            
         }
     });
 });
@@ -46,26 +45,39 @@ app.get('/workouts/new',(req, res) => {
 // - CREATE
 app.post('/workouts/new',(req, res) => {
     
-    // Exercise.create({
+    let exercises = req.body.exercise;
+    let workoutName = req.body.workoutName;
 
-    // },(err, exercise) => {
-    //     if(err){
-    //         console.log(err);
-    //     }else{
-    //         console.log('Created exercise');
-    //         console.log(exercise);
-    //     }
-    // });
+    //TODO: ADD DAYS-WEEK AND EXERCISES-DAY VARIABLES BEFORE WORKOUT CREATION
+    let daysOfWeek = ['Monday','Tuesday','Wednesday','Thursday','Friday'];
+    let exercisesPerDay = 8;
 
-    // day: String,
-    // order: Number,
-    // name: String,
-    // reps: Number,
-    // sets: Number,
-    // weight: Number
+    //TODO: ADD WORKOUT CREATION
 
+    daysOfWeek.forEach((day) => {
+            for (i=0;i<exercisesPerDay;i++){
+                if (exercises[day][i].name){
+                    console.log(exercises[day][i].name);
+                    Exercise.create({
+                            day: day,
+                            order: exercises[day][i].order,
+                            name: exercises[day][i].name,
+                            reps: exercises[day][i].reps,
+                            sets: exercises[day][i].sets,
+                            weight: exercises[day][i].weight
+                    },(err, exercise) => {
+                        if(err){
+                            console.log(err);
+                        }else{
+                            console.log('Created Exercise');
+                            console.log(exercise);
+                        }
+                    })
+                }
+            }
+    })
+    
     res.send(req.body);
-
 });
 
 // SERVER START

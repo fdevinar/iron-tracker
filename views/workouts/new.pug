@@ -15,7 +15,7 @@ form(action='/workouts/new' method='post')
                 - for (i=1; i<=exercisesPerDay; i++){
                     div(class='exercises-block' class=day + Number(i+1))
                         //- ORDER NUMBER POSTED TO APP
-                        input#order(type='hidden' name=`exercise[${day}][order]`)
+                        input#order(type='hidden' name=`exercise[${day}][${i}][order]` value=i)
                         label(for='name') Name 
                         input#name(type='text' default='Squat' name=`exercise[${day}][${i}][name]`)
                         br

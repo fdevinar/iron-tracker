@@ -1,17 +1,15 @@
 include ../partials/header.pug
 
-
-
-
 h2 Check Workouts Below
 
 for ex in exercises
     ul
-        li #[strong #{ex.name}]
         li #{ex.day}
+        li ##{ex.order}
+        li #[strong #{ex.name}]
+
         li #{ex.reps} reps
         li #{ex.sets} sets
         li #{ex.weight} kg
-
 
 include ../partials/footer.pug
