@@ -45,7 +45,10 @@ app.get('/workouts/new',(req, res) => {
 });
 // - CREATE
 app.post('/workouts/new',(req, res) => {
-    // Exercise.create(req.body,(err, exercise) => {
+    
+    // Exercise.create({
+
+    // },(err, exercise) => {
     //     if(err){
     //         console.log(err);
     //     }else{
@@ -53,20 +56,16 @@ app.post('/workouts/new',(req, res) => {
     //         console.log(exercise);
     //     }
     // });
-    // res.redirect('/workouts');
 
-    // console.log(req.body);
-    // if (req.body.name){
-    //     console.log(req.body.name);
-    // }
-    // if (req.body.reps){
-    //     console.log(req.body.reps);
-    // }
-    // if (req.body.weight){
-    //     console.log(req.body.weight);
-    // }
+    // day: String,
+    // order: Number,
+    // name: String,
+    // reps: Number,
+    // sets: Number,
+    // weight: Number
 
     res.send(req.body);
+
 });
 
 // SERVER START

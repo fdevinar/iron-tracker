@@ -12,19 +12,21 @@ form(action='/workouts/new' method='post')
         each day in daysOfWeek
             div(class=day class='day-block')
                 h3 #{day}
-                - for (i=0; i<exercisesPerDay; i++){
+                - for (i=1; i<=exercisesPerDay; i++){
                     div(class='exercises-block' class=day + Number(i+1))
+                        //- ORDER NUMBER POSTED TO APP
+                        input#order(type='hidden' name=`exercise[${day}][order]`)
                         label(for='name') Name 
-                        input#name(type='text' name=`${day}[${i+1}-name]`)
+                        input#name(type='text' default='Squat' name=`exercise[${day}][${i}][name]`)
                         br
                         label(for='reps') Reps 
-                        input#reps(type='number' name=`${day}[${i+1}-reps]`)
+                        input#reps(type='number' default=8 name=`exercise[${day}][${i}][reps]`)
                         
                         label(for='sets') Sets 
-                        input#sets(type='number' name=`${day}[${i+1}-sets]`)
+                        input#sets(type='number' default=3 name=`exercise[${day}][${i}][sets]`)
                         
                         label(for='weight') Weight 
-                        input#weight(type='number' name=`${day}[${i+1}-weight]`)
+                        input#weight(type='number' default=50 name=`exercise[${day}][${i}][weight]`)
                 -}
         submit
             button Create
