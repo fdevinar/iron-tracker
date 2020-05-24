@@ -1,36 +1,17 @@
 include ../partials/header.pug
 
-- let daysOfWeek = ['Monday','Tuesday','Wednesday','Thursday','Friday'];
-- let exercisesPerDay = 8;
-
 form(action='/workouts/new' method='post')
 
-    label(for='workoutName') Workout Name
-    input(type='text' name='workoutName')
+    label(for='name') Workout Name
+    input(type='text' name='name')
+    label(for='trainer') Trainer Name
+    input(type='text' name='trainer')
+    label(for='days') Days of Week
+    input(type='text' name='days')
+                
+//- CHECKBOX FOR DAYS OF WEEK
 
-    .exercises
-        each day in daysOfWeek
-            div(class=day class='day-block')
-                h3 #{day}
-                - for (i=1; i<=exercisesPerDay; i++){
-                    div(class='exercises-block' class=day + Number(i+1))
-                        //- ORDER NUMBER POSTED TO APP
-                        input#order(type='hidden' name=`exercise[${day}][${i}][order]` value=i)
-                        label(for='name') Name 
-                        input#name(type='text' default='Squat' name=`exercise[${day}][${i}][name]`)
-                        br
-                        label(for='reps') Reps 
-                        input#reps(type='number' default=8 name=`exercise[${day}][${i}][reps]`)
-                        
-                        label(for='sets') Sets 
-                        input#sets(type='number' default=3 name=`exercise[${day}][${i}][sets]`)
-                        
-                        label(for='weight') Weight 
-                        input#weight(type='number' default=50 name=`exercise[${day}][${i}][weight]`)
-                -}
-        submit
-            button Create
-
-    button#generate Generate Workout
+    submit
+        button Create Workout
 
 include ../partials/footer.pug

@@ -4,6 +4,7 @@ const app               = express();
 const bodyParser        = require('body-parser');
 const mongoose          = require('mongoose');
 const methodOverride    = require('method-override');
+const colors            = require('colors');
 
 // CONFIGURATION
 app.use(express.static(__dirname + '/public')); // Assets directory
@@ -30,13 +31,15 @@ app.get('/', (req, res) => {
 // WORKOUTS
 // - INDEX
 app.get('/workouts',(req, res) => {
-    Exercise.find({},(err, exercises) => {
+    Workout.find({},(err,workouts) => {
         if(err){
             console.log(err);
+            res.render('landing');
         }else{
-            res.render('workouts/index',{exercises:exercises});            
+            console.log(workouts);
+            res.render('workouts/index',{workouts:workouts});
         }
-    });
+    })
 });
 // - NEW
 app.get('/workouts/new',(req, res) => {
@@ -45,44 +48,67 @@ app.get('/workouts/new',(req, res) => {
 // - CREATE
 app.post('/workouts/new',(req, res) => {
     
-    let exercises = req.body.exercise;
-    let workoutName = req.body.workoutName;
+    console.log(req.body);
 
-    //TODO: ADD DAYS-WEEK AND EXERCISES-DAY VARIABLES BEFORE WORKOUT CREATION
-    let daysOfWeek = ['Monday','Tuesday','Wednesday','Thursday','Friday'];
-    let exercisesPerDay = 8;
+    Workout.create(req.body,(err,workout) => {
+        if(err){
+            console.log(err);
+            res.redirect('workouts')
 
-    //TODO: ADD WORKOUT CREATION
+        }else{
+            console.log('Workout Created');
+            // console.log(workout);
+            res.redirect('/workouts')
+        }
+    });
 
-    daysOfWeek.forEach((day) => {
-            for (i=0;i<exercisesPerDay;i++){
-                if (exercises[day][i].name){
-                    console.log(exercises[day][i].name);
-                    Exercise.create({
-                            day: day,
-                            order: exercises[day][i].order,
-                            name: exercises[day][i].name,
-                            reps: exercises[day][i].reps,
-                            sets: exercises[day][i].sets,
-                            weight: exercises[day][i].weight
-                    },(err, exercise) => {
-                        if(err){
-                            console.log(err);
-                        }else{
-                            console.log('Created Exercise');
-                            console.log(exercise);
-                        }
-                    })
-                }
-            }
-    })
-    
-    res.send(req.body);
+    // let exercises = req.body.exercise;
+    // let workoutName = req.body.workoutName;
+    // let trainer = 'Fabricio'
+
+    // let daysOfWeek = ['Monday','Tuesday','Wednesday','Thursday','Friday'];
+    // let exercisesPerDay = 8;
+
+
+    // // - CREATE EXERCISES AND ADD TO EXERCISE ARRAY
+    // daysOfWeek.forEach((day) => {
+    //     for (i=0;i<exercisesPerDay;i++){
+    //         if (exercises[day][i].name){
+    //             Exercise.create({
+    //                     day: day,
+    //                     order: exercises[day][i].order,
+    //                     name: exercises[day][i].name,
+    //                     reps: exercises[day][i].reps,
+    //                     sets: exercises[day][i].sets,
+    //                     weight: exercises[day][i].weight
+    //             },(err, exercise) => {
+    //                 if(err){
+    //                     console.log(err);
+    //                 }else{
+    //                     console.log('Exercise Created');
+    //                     console.log(exercise);
+    //                 }
+    //             })
+    //         }
+    //     }
+    // })
+
+
+
+});
+
+// EXERCISES
+
+// - NEW
+//TODO ADD EXERCISES CREATION
+app.get('/exercises/new',(req, res) => {
+    res.render('exercises/new');
 });
 
 // SERVER START
 app.listen(3000,() => {
-    console.log('*** Iron Tracker server running ***');
+    console.clear();
+    console.log('*** Iron Tracker server running ***'.white.bgGreen);
 });
 
 /*
