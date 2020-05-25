@@ -68,6 +68,7 @@ app.get('/workouts/:id', (req, res) => {
         }else{
             console.log('Found Workout:');
             console.log(workout);
+            // workout = JSON.stringify(workout);
             res.render('workouts/show',{workout:workout});
         }
     });
@@ -82,7 +83,9 @@ app.post('/workouts/:id/exercises/new',(req, res) => {
 
     let workout = req.body;
 
-    console.log(workout);
+    // workout = JSON.stringify(workout);
+
+
     // res.render('workouts/',{workout:workout})
     res.render('exercises/new',{workout:workout});
 

@@ -1,22 +1,13 @@
 include ../partials/header.pug
 
-//- TODO: GET DAYS OF WEEK AND EXERCISES PER DAY FROM PARAMS
-- let daysOfWeek = ['Monday','Tuesday','Wednesday','Thursday','Friday'];
 - let exercisesPerDay = 8;
 
-- console.log(workout);
+- let daysArray = workout.days.split(',');
+- let daysOfWeek = daysArray.map(day => day.replace(/[^A-Za-z]/g, ""));
 
-//- CONVERT STRING TO ARRAY
-
-//- {
-//-   days: '["Monday","Wednesday","Friday"]',
-//-   id: '5ecb13ab366afd0320af0ec2'
-//- }
+//- CONFIGURE EXERCISE CREATION
 
 form(action='/workouts/new' method='post')
-
-    //- label(for='workoutName') Workout Name
-    //- input(type='text' name='workoutName')
 
     .exercises
         each day in daysOfWeek
