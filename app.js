@@ -41,17 +41,6 @@ app.get('/workouts',(req, res) => {
         }
     });
 });
-// - SHOW
-app.get('/workouts/:id', (req, res) => {
-    let id = req.params._id;
-    Workout.findOne({id}, (err, workout) => {
-        if(err){
-            console.log(err);
-        }else{
-            res.render('workouts/show',{workout:workout});
-        }
-    });
-});
 // - NEW
 app.get('/workouts/new',(req, res) => {
     res.render('workouts/new');
@@ -69,13 +58,33 @@ app.post('/workouts/new',(req, res) => {
         }
     });
 });
+// - SHOW
+app.get('/workouts/:id', (req, res) => {
+    let id = req.params.id;
+    console.log(id);
+    Workout.findById(id, (err, workout) => {
+        if(err){
+            console.log(err);
+        }else{
+            console.log('Found Workout:');
+            console.log(workout);
+            res.render('workouts/show',{workout:workout});
+        }
+    });
+});
 
 // EXERCISES
-
-// - NEW
 //TODO ADD EXERCISES CREATION
-app.get('/exercises/new',(req, res) => {
-    res.render('exercises/new');
+    
+// - NEW
+app.post('/workouts/:id/exercises/new',(req, res) => {
+    // res.render('exercises/new');
+
+    let workout = req.body;
+
+    console.log(workout);
+    // res.render('workouts/',{workout:workout})
+    res.render('exercises/new',{workout:workout});
 
     // // - CREATE EXERCISES AND ADD TO EXERCISE ARRAY
     // daysOfWeek.forEach((day) => {

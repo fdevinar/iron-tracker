@@ -4,6 +4,15 @@ include ../partials/header.pug
 - let daysOfWeek = ['Monday','Tuesday','Wednesday','Thursday','Friday'];
 - let exercisesPerDay = 8;
 
+- console.log(workout);
+
+//- CONVERT STRING TO ARRAY
+
+//- {
+//-   days: '["Monday","Wednesday","Friday"]',
+//-   id: '5ecb13ab366afd0320af0ec2'
+//- }
+
 form(action='/workouts/new' method='post')
 
     //- label(for='workoutName') Workout Name

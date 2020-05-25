@@ -1,14 +1,23 @@
 include ../partials/header.pug
 
 
-ul
-    li Days of Week #{workout.days}
-    li Exercises: #{workout.exercises}
-    li ID: #{workout._id}
-    li Name: #{workout.name}
-    li Trainer: #{workout.trainer}
+form(action='../workouts/' + workout._id + '/exercises/new' method='post')
+    ul
+        input(type='hidden' name='days' value=workout.days)
+        input(type='hidden' name='id' value=workout._id)
+        li Days of Week #{workout.days}
+        li Exercises: #{workout.exercises}
+        li ID: #{workout._id}
+        li Name: #{workout.name}
+        li Trainer: #{workout.trainer}
+    submit
+        button Add Exercises
 
-a(href='../exercises/new') Add Exercises
+
+//- a(href='../exercises/new') Add Exercises
+
+
+
 
 
 
