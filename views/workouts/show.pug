@@ -1,0 +1,15 @@
+include ../partials/header.pug
+
+
+ul
+    li Days of Week #{workout.days}
+    li Exercises: #{workout.exercises}
+    li ID: #{workout._id}
+    li Name: #{workout.name}
+    li Trainer: #{workout.trainer}
+
+a(href='../exercises/new') Add Exercises
+
+
+
+include ../partials/footer.pug

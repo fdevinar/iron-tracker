@@ -2,15 +2,27 @@ include ../partials/header.pug
 
 form(action='/workouts/new' method='post')
 
-    label(for='name') Workout Name
+    label(for='name') Workout Name: 
     input(type='text' name='name')
-    label(for='trainer') Trainer Name
+    label(for='trainer') Trainer Name: 
     input(type='text' name='trainer')
-    label(for='days') Days of Week
-    input(type='text' name='days')
+    
+    label(for='days') Days of Week: 
+    label(for='monday') Monday
+    input(type='checkbox' id='monday' name='days' value='Monday')
+    label(for='tuesday') Tuesday
+    input(type='checkbox' id='tuesday' name='days' value='Tuesday')
+    label(for='wednesday') Wednesday
+    input(type='checkbox' id='wednesday' name='days' value='Wednesday')
+    label(for='thursday') Thursday
+    input(type='checkbox' id='thursday' name='days' value='Thursday')
+    label(for='friday') Friday
+    input(type='checkbox' id='friday' name='days' value='Friday')
+    label(for='saturday') Saturday
+    input(type='checkbox' id='saturday' name='days' value='Saturday')
+    label(for='sunday') Sunday
+    input(type='checkbox' id='sunday' name='days' value='Sunday')
                 
-//- CHECKBOX FOR DAYS OF WEEK
-
     submit
         button Create Workout
 

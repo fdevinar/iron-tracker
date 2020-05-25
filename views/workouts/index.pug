@@ -1,10 +1,7 @@
 include ../partials/header.pug
 
 h2 Check Workouts Below
-
 a(href='workouts/new') New Workout
-
--console.log(workouts);
 
 -if(Object.entries(workouts).length !== 0){
     for wk in workouts
@@ -12,8 +9,10 @@ a(href='workouts/new') New Workout
             li #{wk.name} 
             li #{wk.trainer}
             li #{wk.days}
+            li #{wk._id}
+            li
+                a(href='workouts/' + wk._id) Details
 -}
-
 
 //- for ex in exercises
 //-     ul

@@ -1,12 +1,13 @@
 include ../partials/header.pug
 
+//- TODO: GET DAYS OF WEEK AND EXERCISES PER DAY FROM PARAMS
 - let daysOfWeek = ['Monday','Tuesday','Wednesday','Thursday','Friday'];
 - let exercisesPerDay = 8;
 
 form(action='/workouts/new' method='post')
 
-    label(for='workoutName') Workout Name
-    input(type='text' name='workoutName')
+    //- label(for='workoutName') Workout Name
+    //- input(type='text' name='workoutName')
 
     .exercises
         each day in daysOfWeek
@@ -31,6 +32,5 @@ form(action='/workouts/new' method='post')
         submit
             button Create
 
-    button#generate Generate Workout
 
 include ../partials/footer.pug
