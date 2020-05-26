@@ -7,7 +7,11 @@ include ../partials/header.pug
 
 //- CONFIGURE EXERCISE CREATION
 
-form(action='/workouts/new' method='post')
+//- form(action='/exercises/create' method='post')
+form(action='../exercises/create' method='post')
+
+    input(type='hidden' name='workout[workoutID]' value=workout.id)
+    input(type='hidden' name='workout[days]' value=workout.days)
 
     .exercises
         each day in daysOfWeek
@@ -16,18 +20,18 @@ form(action='/workouts/new' method='post')
                 - for (i=1; i<=exercisesPerDay; i++){
                     div(class='exercises-block' class=day + Number(i+1))
                         //- ORDER NUMBER POSTED TO APP
-                        input#order(type='hidden' name=`exercise[${day}][${i}][order]` value=i)
+                        input#order(type='hidden' name=`exercises[${day}][${i}][order]` value=i)
                         label(for='name') Name 
-                        input#name(type='text' default='Squat' name=`exercise[${day}][${i}][name]`)
+                        input#name(type='text' default='Squat' name=`exercises[${day}][${i}][name]`)
                         br
                         label(for='reps') Reps 
-                        input#reps(type='number' default=8 name=`exercise[${day}][${i}][reps]`)
+                        input#reps(type='number' default=8 name=`exercises[${day}][${i}][reps]`)
                         
                         label(for='sets') Sets 
-                        input#sets(type='number' default=3 name=`exercise[${day}][${i}][sets]`)
+                        input#sets(type='number' default=3 name=`exercises[${day}][${i}][sets]`)
                         
                         label(for='weight') Weight 
-                        input#weight(type='number' default=50 name=`exercise[${day}][${i}][weight]`)
+                        input#weight(type='number' default=50 name=`exercises[${day}][${i}][weight]`)
                 -}
         submit
             button Create

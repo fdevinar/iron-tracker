@@ -59,6 +59,8 @@ app.post('/workouts/new',(req, res) => {
     });
 });
 // - SHOW
+//TODO SHOW EXERCISES INSTEAD OF ID
+//TODO CLEAN DATABASE
 app.get('/workouts/:id', (req, res) => {
     let id = req.params.id;
     console.log(id);
@@ -75,43 +77,69 @@ app.get('/workouts/:id', (req, res) => {
 });
 
 // EXERCISES
-//TODO ADD EXERCISES CREATION
-    
 // - NEW
 app.post('/workouts/:id/exercises/new',(req, res) => {
-    // res.render('exercises/new');
-
     let workout = req.body;
-
-    // workout = JSON.stringify(workout);
-
-
-    // res.render('workouts/',{workout:workout})
     res.render('exercises/new',{workout:workout});
+});
+// - CREATE
+app.post('/workouts/:id/exercises/create',(req, res) => {
+    let workoutID = req.body.workout.workoutID;
 
-    // // - CREATE EXERCISES AND ADD TO EXERCISE ARRAY
-    // daysOfWeek.forEach((day) => {
-    //     for (i=0;i<exercisesPerDay;i++){
-    //         if (exercises[day][i].name){
-    //             Exercise.create({
-    //                     day: day,
-    //                     order: exercises[day][i].order,
-    //                     name: exercises[day][i].name,
-    //                     reps: exercises[day][i].reps,
-    //                     sets: exercises[day][i].sets,
-    //                     weight: exercises[day][i].weight
-    //             },(err, exercise) => {
-    //                 if(err){
-    //                     console.log(err);
-    //                 }else{
-    //                     console.log('Exercise Created');
-    //                     console.log(exercise);
-    //                 }
-    //             })
-    //         }
-    //     }
-    // })
+    let daysArray = req.body.workout.days.split(',');
+    let daysOfWeek = daysArray.map(day => day.replace(/[^A-Za-z]/g, ""));
 
+    let exercisesPerDay = 8;
+
+    let exercises = req.body.exercises;
+
+
+    console.log(workoutID);
+    console.log(daysOfWeek);
+
+    // - CREATE EXERCISES AND ADD TO EXERCISE ARRAY
+    Workout.findById(workoutID, (err, workout) => {
+        if(err){
+            console.log(err);
+        }else{
+
+            console.log('WORKOUT FOUND');
+
+            let exerciseArray = [];
+            console.log(workout);
+
+            daysOfWeek.forEach((day) => {
+                for (i=0;i<exercisesPerDay;i++){
+                    if (exercises[day][i].name){
+                        Exercise.create({
+                                day: day,
+                                order: exercises[day][i].order,
+                                name: exercises[day][i].name,
+                                reps: exercises[day][i].reps,
+                                sets: exercises[day][i].sets,
+                                weight: exercises[day][i].weight
+                        },(err, exercise) => {
+                            if(err){
+                                console.log(err);
+                            }else{
+                                console.log('Exercise Created');
+                                console.log(exercise);
+                                exerciseArray.push(exercise.id);
+                                console.log('Exercise Array');
+                                console.log(exerciseArray);
+                                workout.exercises.push(exerciseArray);
+                                workout.save();
+                    
+                            }
+                        })
+                    }
+                }
+            });
+
+            res.redirect('/workouts');
+
+        }
+    })
 });
 
 // SERVER START
