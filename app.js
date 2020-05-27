@@ -90,12 +90,12 @@ app.post('/workouts/:id/exercises/create',(req, res) => {
     let daysOfWeek = daysArray.map(day => day.replace(/[^A-Za-z]/g, ""));
 
     let exercisesPerDay = 8;
-
     let exercises = req.body.exercises;
-
 
     console.log(workoutID);
     console.log(daysOfWeek);
+
+    //! FIX: ONLY ONE EXERCISE PER CREATION
 
     // - CREATE EXERCISES AND ADD TO EXERCISE ARRAY
     Workout.findById(workoutID, (err, workout) => {
