@@ -3,16 +3,18 @@ include ../partials/header.pug
 h2 Check Workouts Below
 a(href='workouts/new') New Workout
 
--if(Object.entries(workouts).length !== 0){
-    for wk in workouts
-        ul
-            li #{wk.name} 
-            li #{wk.trainer}
-            li #{wk.days}
-            li #{wk._id}
-            li
-                a(href='workouts/' + wk._id) Details
--}
+#workouts-show
+    -if(Object.entries(workouts).length !== 0){
+        for wk in workouts
+            .workout-block
+                ul
+                    li #{wk.name} 
+                    li #{wk.trainer}
+                    li #{wk.days}
+                    li #{wk._id}
+                    li
+                        a(href='workouts/' + wk._id) Details
+    -}
 
 //- for ex in exercises
 //-     ul

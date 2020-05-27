@@ -124,16 +124,19 @@ app.post('/workouts/:id/exercises/create',(req, res) => {
                             }else{
                                 console.log('Exercise Created');
                                 console.log(exercise);
-                                exerciseArray.push(exercise.id);
-                                console.log('Exercise Array');
-                                console.log(exerciseArray);
-                                workout.exercises.push(exerciseArray);
-                                workout.save();
-                    
+                                // exerciseArray.push(exercise.id);
+                                // console.log('Exercise Array');
+                                // console.log(exerciseArray);
+                                workout.exercises.push(exercise.id);
+
                             }
+
                         })
                     }
                 }
+                //! CANT SAVE SAME DOC MULTIPLE TIMES
+                workout.save();
+
             });
 
             res.redirect('/workouts');

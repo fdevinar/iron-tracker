@@ -25,4 +25,13 @@ input[type='Number'] {
     width: 16%;
 }
 
+#workouts-show{
+    display: flex;
+
+}
+
+.workout-block{
+    width: 30%;
+}
+
 
