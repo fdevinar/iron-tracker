@@ -20,12 +20,13 @@ mongoose.connect('mongodb://localhost/iron-tracker',
 // MODELS
 const Workout = require('./models/workout');
 const Exercise = require('./models/exercise');
-//const seedDB = require('./seeds');
-//seedDB();
+const seedDB = require('./seeds');
+seedDB();
 
 // ROUTES
 // - LANDING
 app.get('/', (req, res) => {
+    // REMOVING LANDING TEMPORARILY
     res.render('landing');
 });
 // WORKOUTS
@@ -60,7 +61,6 @@ app.post('/workouts/new',(req, res) => {
 });
 // - SHOW
 //TODO SHOW EXERCISES INSTEAD OF ID
-//TODO CLEAN DATABASE
 app.get('/workouts/:id', (req, res) => {
     let id = req.params.id;
     console.log(id);
@@ -104,41 +104,39 @@ app.post('/workouts/:id/exercises/create',(req, res) => {
         }else{
 
             console.log('WORKOUT FOUND');
-
-            let exerciseArray = [];
             console.log(workout);
+
+            let exerciseObject = [];
 
             daysOfWeek.forEach((day) => {
                 for (i=0;i<exercisesPerDay;i++){
                     if (exercises[day][i].name){
-                        Exercise.create({
-                                day: day,
-                                order: exercises[day][i].order,
-                                name: exercises[day][i].name,
-                                reps: exercises[day][i].reps,
-                                sets: exercises[day][i].sets,
-                                weight: exercises[day][i].weight
-                        },(err, exercise) => {
-                            if(err){
-                                console.log(err);
-                            }else{
-                                console.log('Exercise Created');
-                                console.log(exercise);
-                                // exerciseArray.push(exercise.id);
-                                // console.log('Exercise Array');
-                                // console.log(exerciseArray);
-                                workout.exercises.push(exercise.id);
-
-                            }
-
-                        })
+                        exerciseObject.push({
+                            day: day,
+                            order: exercises[day][i].order,
+                            name: exercises[day][i].name,
+                            reps: exercises[day][i].reps,
+                            sets: exercises[day][i].sets,
+                            weight: exercises[day][i].weight
+                        });
                     }
                 }
-                //! CANT SAVE SAME DOC MULTIPLE TIMES
-                workout.save();
-
             });
 
+            //! FIX - NEED TO ADD IDs EXERCISE ARRAYS
+            //! FIX -  ONLY ONE EXERCISE CREATED BASED ON OBJECT CREATED ABOVE
+
+            Exercise.create({exerciseObject},(err, exercise) => {
+            if(err){
+                console.log(err);
+            }else{
+                console.log('Exercise Created');
+                console.log(exercise);
+                workout.exercises.push(exercise.id);
+                console.log('Exercise Object');
+                console.log(exerciseObject);
+            }
+        })
             res.redirect('/workouts');
 
         }
