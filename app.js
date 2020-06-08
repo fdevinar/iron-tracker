@@ -63,24 +63,35 @@ app.post('/workouts/new',(req, res) => {
 //TODO SHOW EXERCISES INSTEAD OF ID
 app.get('/workouts/:id', (req, res) => {
     let id = req.params.id;
-    console.log(id);
     Workout.findById(id, (err, workout) => {
         if(err){
             console.log(err);
         }else{
-
             console.log('Found Workout:');
             console.log(workout);
             console.log('Found Exercises:');
             console.log(workout.exercises);
+            let foundExercises;
             // GET EXERCISES FOR EACH AND ADD TO OBJECT
-            Exercise.findById(workout.exercises[0], (err, exercise) => {
-                if(err){
-                    console.log(err);
-                }else{
-                    console.log(exercise);
-                }
+            workout.exercises.forEach((exercise) => {
+
+                Exercise.findById(exercise, (err, exercise) => {
+                    if(err){
+                        console.log(err);
+                    }else{
+                        console.log(exercise);
+                        foundExercises += exercise;
+
+                    }
+                });
+
+                console.log('Found Exercises:');
+                console.log(foundExercises);
+
+                //! foundExercises returning undefined
+
             });
+
             // SEND EXERCISES OBJECT VIA RENDER
             res.render('workouts/show',{workout:workout});
         }
