@@ -68,9 +68,20 @@ app.get('/workouts/:id', (req, res) => {
         if(err){
             console.log(err);
         }else{
+
             console.log('Found Workout:');
             console.log(workout);
-            // workout = JSON.stringify(workout);
+            console.log('Found Exercises:');
+            console.log(workout.exercises);
+            // GET EXERCISES FOR EACH AND ADD TO OBJECT
+            Exercise.findById(workout.exercises[0], (err, exercise) => {
+                if(err){
+                    console.log(err);
+                }else{
+                    console.log(exercise);
+                }
+            });
+            // SEND EXERCISES OBJECT VIA RENDER
             res.render('workouts/show',{workout:workout});
         }
     });
@@ -133,6 +144,9 @@ app.post('/workouts/:id/exercises/create',(req, res) => {
                 console.log('Exercise Created');
                 console.log(exercise);
                 workout.exercises.push(exercise.id);
+                workout.save();
+                console.log('Workout.exercises:');
+                console.log(workout.exercises);
                 console.log('Exercise Object');
                 console.log(exerciseObject);
             }
