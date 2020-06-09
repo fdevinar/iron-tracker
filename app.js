@@ -63,39 +63,26 @@ app.post('/workouts/new',(req, res) => {
 //TODO SHOW EXERCISES INSTEAD OF ID
 app.get('/workouts/:id', (req, res) => {
     let id = req.params.id;
-    Workout.findById(id, (err, workout) => {
+    let renderObject = {};
+
+    Workout.findById(id, (err, foundWorkout) => {
         if(err){
             console.log(err);
         }else{
             console.log('Found Workout:');
-            console.log(workout);
-            console.log('Found Exercises:');
-            console.log(workout.exercises);
-            let foundExercises;
-            // GET EXERCISES FOR EACH AND ADD TO OBJECT
-            workout.exercises.forEach((exercise) => {
-
-                Exercise.findById(exercise, (err, exercise) => {
-                    if(err){
-                        console.log(err);
-                    }else{
-                        console.log(exercise);
-                        foundExercises += exercise;
-
-                    }
-                });
-
-                console.log('Found Exercises:');
-                console.log(foundExercises);
-
-                //! foundExercises returning undefined
-
-            });
-
-            // SEND EXERCISES OBJECT VIA RENDER
-            res.render('workouts/show',{workout:workout});
+            console.log(foundWorkout);
+            renderObject = {
+                workout: foundWorkout
+            };
+            console.log('renderObject');
+            console.log(renderObject);
+            res.render('workouts/show',{workout:foundWorkout});
         }
     });
+
+    //TODO MOUNT RENDER OBJECT USING EXERCISES INSTEAD OF ID
+    //TODO PUSH RENDER TO BELOW
+
 });
 
 // EXERCISES
@@ -145,7 +132,6 @@ app.post('/workouts/:id/exercises/create',(req, res) => {
                 }
             });
 
-            //! FIX - NEED TO ADD IDs EXERCISE ARRAYS
             //! FIX -  ONLY ONE EXERCISE CREATED BASED ON OBJECT CREATED ABOVE
 
             Exercise.create({exerciseObject},(err, exercise) => {
