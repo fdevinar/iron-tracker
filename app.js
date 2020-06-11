@@ -62,10 +62,10 @@ app.post('/workouts/new',(req, res) => {
 // - SHOW
 //TODO SHOW EXERCISES INSTEAD OF ID
 app.get('/workouts/:id', (req, res) => {
-    let id = req.params.id;
+    let workoutId = req.params.id;
     let renderObject = {};
 
-    Workout.findById(id, (err, foundWorkout) => {
+    Workout.findById(workoutId, (err, foundWorkout) => {
         if(err){
             console.log(err);
         }else{
@@ -80,10 +80,19 @@ app.get('/workouts/:id', (req, res) => {
         }
     });
 
+    getExercisesFromId(workoutId);
+
     //TODO MOUNT RENDER OBJECT USING EXERCISES INSTEAD OF ID
     //TODO PUSH RENDER TO BELOW
 
 });
+
+//! UNIFY WORKOUT AND EXERCISE MODELS
+
+function getExercisesFromId(workoutId) {
+    console.log(workoutId);
+    //TODO QUERY DB TO GET EXERCISES OBJECT
+};
 
 // EXERCISES
 // - NEW
