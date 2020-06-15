@@ -7,9 +7,9 @@ form(action='../workouts/' + workout._id + '/exercises/new' method='post')
         input(type='hidden' name='id' value=workout._id)
         li Days of Week #{workout.days}
         
-        //- span Exercises:
-        //- for exercise in workout.exercises
-        //-     li #{exercise}
+        span Exercises:
+        for exercise in workout.exercises
+            li #{exercise}
 
         li ID: #{workout._id}
         li Name: #{workout.name}

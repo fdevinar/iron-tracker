@@ -63,30 +63,35 @@ app.post('/workouts/new',(req, res) => {
 //TODO SHOW EXERCISES INSTEAD OF ID
 app.get('/workouts/:id', (req, res) => {
 
-    //TODO USE PROMISES TO CHAIN FUNCTIONS
+    //TODO USE PROMISES TO CHAIN FUNCTIONS - PROMISES ASYNC/AWAIT
     //TODO USE INIT FUNCTION TO MERGE OBJECTS BEFORE SENDING (WORKOUT + EXERCISES)
 
     let workoutID = req.params.id;
 
-    //! RESEARCH AND USE PROMISES
-
     const foundWorkout = findWorkout(workoutID);
-    
-    res.send(foundWorkout);
+
+    console.log(foundWorkout);
+
+    foundWorkout.then((workout) => {
+        console.log(workout);
+    });
+
 
     //res.render('workouts/show',{workout:foundWorkout});
-
 });
 
-function findWorkout(workoutID) {
-    Workout.findById(workoutID, (err, workout) => {
+async function findWorkout(workoutID) {
+    await Workout.findById(workoutID, (err, workout) => {
         if(err){
             console.log(err);
             return null
         }else{
+            console.log('Found Workout');
+            console.log(workout);
             return workout;
         }
     });
+
 };
 
 // EXERCISES
