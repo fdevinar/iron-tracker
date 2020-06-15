@@ -66,38 +66,26 @@ app.get('/workouts/:id', (req, res) => {
     //TODO USE PROMISES TO CHAIN FUNCTIONS
     //TODO USE INIT FUNCTION TO MERGE OBJECTS BEFORE SENDING (WORKOUT + EXERCISES)
 
-    new Promise(function(resolve, reject) {
+    let workoutID = req.params.id;
 
-        setTimeout(() => resolve(1), 1000); // (*)
-      }).then(function(result) { // (**)
-        console.log(result); // 1
-        return result * 2;
-      }).then(function(result) { // (***)
-        console.log(result); // 2
-        return result * 2;
-}).then(function(result) {
-        console.log(result); // 4
-        return result * 2;
+//! RESEARCH AND USE PROMISES
+
+    res.render('workouts/show',{workout:foundWorkout});
+
 });
 
-    let workoutId = req.params.id;
-    let renderObject = {};
-
-    Workout.findById(workoutId, (err, foundWorkout) => {
+function findWorkout(workoutID) {
+    Workout.findById(workoutID, (err, workout) => {
         if(err){
             console.log(err);
+            return null
         }else{
-            console.log('Found Workout:');
-            console.log(foundWorkout);
-            renderObject = {
-                workout: foundWorkout
-            };
-            console.log('renderObject');
-            console.log(renderObject);
-            res.render('workouts/show',{workout:foundWorkout});
+            console.log('function called');
+            console.log(workout);
+            return workout;
         }
     });
-});
+};
 
 // EXERCISES
 // - NEW
