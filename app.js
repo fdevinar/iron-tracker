@@ -62,6 +62,24 @@ app.post('/workouts/new',(req, res) => {
 // - SHOW
 //TODO SHOW EXERCISES INSTEAD OF ID
 app.get('/workouts/:id', (req, res) => {
+
+    //TODO USE PROMISES TO CHAIN FUNCTIONS
+    //TODO USE INIT FUNCTION TO MERGE OBJECTS BEFORE SENDING (WORKOUT + EXERCISES)
+
+    new Promise(function(resolve, reject) {
+
+        setTimeout(() => resolve(1), 1000); // (*)
+      }).then(function(result) { // (**)
+        console.log(result); // 1
+        return result * 2;
+      }).then(function(result) { // (***)
+        console.log(result); // 2
+        return result * 2;
+}).then(function(result) {
+        console.log(result); // 4
+        return result * 2;
+});
+
     let workoutId = req.params.id;
     let renderObject = {};
 
@@ -79,20 +97,7 @@ app.get('/workouts/:id', (req, res) => {
             res.render('workouts/show',{workout:foundWorkout});
         }
     });
-
-    getExercisesFromId(workoutId);
-
-    //TODO MOUNT RENDER OBJECT USING EXERCISES INSTEAD OF ID
-    //TODO PUSH RENDER TO BELOW
-
 });
-
-//! UNIFY WORKOUT AND EXERCISE MODELS
-
-function getExercisesFromId(workoutId) {
-    console.log(workoutId);
-    //TODO QUERY DB TO GET EXERCISES OBJECT
-};
 
 // EXERCISES
 // - NEW
