@@ -68,9 +68,13 @@ app.get('/workouts/:id', (req, res) => {
 
     let workoutID = req.params.id;
 
-//! RESEARCH AND USE PROMISES
+    //! RESEARCH AND USE PROMISES
 
-    res.render('workouts/show',{workout:foundWorkout});
+    const foundWorkout = findWorkout(workoutID);
+    
+    res.send(foundWorkout);
+
+    //res.render('workouts/show',{workout:foundWorkout});
 
 });
 
@@ -80,8 +84,6 @@ function findWorkout(workoutID) {
             console.log(err);
             return null
         }else{
-            console.log('function called');
-            console.log(workout);
             return workout;
         }
     });
