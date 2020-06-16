@@ -66,33 +66,75 @@ app.get('/workouts/:id', (req, res) => {
     //TODO USE PROMISES TO CHAIN FUNCTIONS - PROMISES ASYNC/AWAIT
     //TODO USE INIT FUNCTION TO MERGE OBJECTS BEFORE SENDING (WORKOUT + EXERCISES)
 
-    let workoutID = req.params.id;
+    // Workout.findById(req.params.id, (err, workout) => {
+    //     if(err){
+    //         console.log(err);
+    //         return null
+    //     }else{
+    //         console.log('Found Workout');
+    //         console.log(workout);
+    //         return workout;
+    //     }
+    // });
 
-    const foundWorkout = findWorkout(workoutID);
+    //! MOUNT OBJECT
 
-    console.log(foundWorkout);
+    let renderObject = {};
 
-    foundWorkout.then((workout) => {
-        console.log(workout);
-    });
+    Workout.findById(req.params.id)
+        .exec(function (err, workout) {
+            console.log(workout);
+            renderObject.workout = workout;
+            let exerciseArray = [];
+            workout.exercises.forEach(function(ex,idx) {
+                console.log(idx);
+                let exArr = [];
+                Exercise
+                    .findById(ex)
+                    .exec(function (err, exercise) {
+                        exArr.push(exercise);
+                        console.log(exercise);
+                        renderObject.exercises = exercise;
+                        console.log('exArr!!!!'.red);
+                        console.log(exArr);
+                    });
+            });
+
+            console.log('Render Object:');
+            console.log(renderObject);
+
+            // setTimeout(() => {
+            //     console.log('Timeout...');
+            // }, 5000);
+
+            res.send(renderObject);
+        });
+
+    // const foundWorkout = findWorkout(workoutID);
+
+    // console.log(foundWorkout);
+
+    // foundWorkout.then((workout) => {
+    //     console.log(workout);
+    // });
 
 
     //res.render('workouts/show',{workout:foundWorkout});
 });
 
-async function findWorkout(workoutID) {
-    await Workout.findById(workoutID, (err, workout) => {
-        if(err){
-            console.log(err);
-            return null
-        }else{
-            console.log('Found Workout');
-            console.log(workout);
-            return workout;
-        }
-    });
+// async function findWorkout(workoutID) {
+//     await Workout.findById(workoutID, (err, workout) => {
+//         if(err){
+//             console.log(err);
+//             return null
+//         }else{
+//             console.log('Found Workout');
+//             console.log(workout);
+//             return workout;
+//         }
+//     });
 
-};
+// };
 
 // EXERCISES
 // - NEW
