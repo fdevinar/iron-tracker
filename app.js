@@ -38,7 +38,7 @@ app.get('/workouts',(req, res) => {
             console.log(err);
             res.render('landing');
         }else{
-            console.log(workouts);
+            //console.log(workouts);
             res.render('workouts/index',{workouts:workouts});
         }
     });
@@ -81,50 +81,81 @@ app.get('/workouts/:id', (req, res) => {
     //! CHAIN FUNCTIONS
 
     let workoutId = req.params.id;
-    let renderObject = {};
+    
+    //let renderObject = {};
+    let workoutObject;
+    let exerciseObject;
 
-    // const workout = findWorkout(workoutId)
-    //         .then((value) => console.log(value)
-    //         // .then()
-    //         .catch (err => console.log(err))
+    let workoutPromise = getWorkout();
 
-    let workoutObj;
-    let exercises;
+    // HARDCODED
+    let exerciseId = '5ecdc2dbb68af60338dd2c8c';
 
-    Workout.findById(workoutId)
-
-            .then((workout) => {
-                workoutObj = workout;
-                console.log(workout);
-                return Exercise.find(workout);
+    workoutPromise
+        .then(result => {
+        workoutObject = result;
+        return workoutObject
+    })
+            .then(result => {
+                // .then procura o return anterior na cadeia
+                let exerciseArray = result.exercises;
+                exerciseArray.forEach((exercise) => {
+                    //console.log(exercise);
+                    let exercisePromise = getExercise(exercise);
+                    exercisePromise
+                        .then(exercise => {
+                            //TODO: MOUNT EXERCISE OBJECT
+                            //exerciseObject += exercise;
+                            console.log(exercise);
+                            return exercise
+                        })
+                        
+                });
+                return result
             })
-            .then(response => console.log(response))
+                .then(result => {
 
 
+                    console.log('workout Object:')
+                    console.log(workoutObject);
+                    console.log('exercise Object:')
+                    console.log(exerciseObject);
+                    console.log('Result:');
+                    console.log(result);
+                    
+                    res.send(result);
+                })
+    .catch(err => console.log(err))
 
-            .then(() => console.log('END OF THEN'))
+
+    async function getWorkout(){
+        const query = await Workout.findById(workoutId);
+        return query;
+        }
+
+    async function getExercise(exerciseId){
+        let query = await Exercise.findById(exerciseId);
+        return query;
+    }
+    
+    
+
+    //res.send(renderObject);
 
 
-
-    res.send(renderObject);
-
-
-
-    const workoutPromise = (workoutId) => {
-
-        return new Promise(function (resolve,reject){
-            Workout.findById(workoutId, (err, workout) => {
-                if (err){
-                    console.log(err);
-                    reject(err);
-                } else{
-                    console.log(workout);
-                    resolve(workout);
-                }
-            })
-        });
-
-    };
+    // const workoutPromise = (workoutId) => {
+    //     return new Promise(function (resolve,reject){
+    //         Workout.findById(workoutId, (err, workout) => {
+    //             if (err){
+    //                 console.log(err);
+    //                 reject(err);
+    //             } else{
+    //                 console.log(workout);
+    //                 resolve(workout);
+    //             }
+    //         })
+    //     });
+    // };
 
 
 

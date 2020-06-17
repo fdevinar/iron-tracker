@@ -1,6 +1,5 @@
 include ../partials/header.pug
 
-
 form(action='../workouts/' + workout._id + '/exercises/new' method='post')
     ul
         input(type='hidden' name='days' value=workout.days)
@@ -17,12 +16,6 @@ form(action='../workouts/' + workout._id + '/exercises/new' method='post')
     submit
         button Add Exercises
 
-
 //- a(href='../exercises/new') Add Exercises
-
-
-
-
-
 
 include ../partials/footer.pug
