@@ -21,6 +21,7 @@ mongoose.connect('mongodb://localhost/iron-tracker',
 const Workout = require('./models/workout');
 const Exercise = require('./models/exercise');
 const seedDB = require('./seeds');
+const { find } = require('./models/workout');
 seedDB();
 
 // ROUTES
@@ -77,38 +78,55 @@ app.get('/workouts/:id', (req, res) => {
     //     }
     // });
 
-    //! MOUNT OBJECT
+    //! CHAIN FUNCTIONS
 
+    let workoutId = req.params.id;
     let renderObject = {};
 
-    Workout.findById(req.params.id)
-        .exec(function (err, workout) {
-            console.log(workout);
-            renderObject.workout = workout;
-            let exerciseArray = [];
-            workout.exercises.forEach(function(ex,idx) {
-                console.log(idx);
-                let exArr = [];
-                Exercise
-                    .findById(ex)
-                    .exec(function (err, exercise) {
-                        exArr.push(exercise);
-                        console.log(exercise);
-                        renderObject.exercises = exercise;
-                        console.log('exArr!!!!'.red);
-                        console.log(exArr);
-                    });
-            });
+    // const workout = findWorkout(workoutId)
+    //         .then((value) => console.log(value)
+    //         // .then()
+    //         .catch (err => console.log(err))
 
-            console.log('Render Object:');
-            console.log(renderObject);
+    let workoutObj;
+    let exercises;
 
-            // setTimeout(() => {
-            //     console.log('Timeout...');
-            // }, 5000);
+    Workout.findById(workoutId)
 
-            res.send(renderObject);
+            .then((workout) => {
+                workoutObj = workout;
+                console.log(workout);
+                return Exercise.find(workout);
+            })
+            .then(response => console.log(response))
+
+
+
+            .then(() => console.log('END OF THEN'))
+
+
+
+    res.send(renderObject);
+
+
+
+    const workoutPromise = (workoutId) => {
+
+        return new Promise(function (resolve,reject){
+            Workout.findById(workoutId, (err, workout) => {
+                if (err){
+                    console.log(err);
+                    reject(err);
+                } else{
+                    console.log(workout);
+                    resolve(workout);
+                }
+            })
         });
+
+    };
+
+
 
     // const foundWorkout = findWorkout(workoutID);
 
