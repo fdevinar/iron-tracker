@@ -1,5 +1,7 @@
 include ../partials/header.pug
 
+- console.log(workout);
+
 form(action='../workouts/' + workout._id + '/exercises/new' method='post')
     ul
         input(type='hidden' name='days' value=workout.days)
