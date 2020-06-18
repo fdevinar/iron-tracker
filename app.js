@@ -64,42 +64,19 @@ app.post('/workouts/new',(req, res) => {
 //TODO SHOW EXERCISES INSTEAD OF ID
 app.get('/workouts/:id', (req, res) => {
 
-    //TODO USE PROMISES TO CHAIN FUNCTIONS - PROMISES ASYNC/AWAIT
-    //TODO USE INIT FUNCTION TO MERGE OBJECTS BEFORE SENDING (WORKOUT + EXERCISES)
-
-    // Workout.findById(req.params.id, (err, workout) => {
-    //     if(err){
-    //         console.log(err);
-    //         return null
-    //     }else{
-    //         console.log('Found Workout');
-    //         console.log(workout);
-    //         return workout;
-    //     }
-    // });
-
-    //! CHAIN FUNCTIONS
+    //TODO MERGE OBJECTS
 
     let workoutId = req.params.id;
-    
-    //let renderObject = {};
-    
-    
+    let renderObject = {};
     let workoutObject;
-    let exerciseObject;
-    let exercises;
-
-    // HARDCODED
-    let exerciseId = '5ecdc2dbb68af60338dd2c8c';
 
     let workoutPromise = getWorkout(workoutId);
-
-    //TODO MERGE OBJECTS
 
     workoutPromise
         .then(workout => {
             console.log('Workout:');
             console.log(workout);
+            workoutObject = workout;
             return workout
         })
         .then(workout => {
@@ -109,35 +86,18 @@ app.get('/workouts/:id', (req, res) => {
         .then(exercises => {
             console.log('Exercises:');
             console.log(exercises);
+
+            let merged = Object.assign(renderObject,workoutObject,exercises);
+            console.log('Merged'.yellow.bgBlue);
+            console.log(merged);
+
+            //TODO: CHECK AND SOLVE MERGED OBJECT
+
+            res.send(merged);
         })
         .catch(err => console.log(err))
 
 
-    // workoutPromise
-    //     .then(result => {
-    //     return result
-    // })
-    //     .then(result => {
-    //         // .then procura o return anterior na cadeia
-    //         console.log('Workout:');
-    //         console.log(result);
-    //         exercises = getExercises(result.exercises);
-    //         exercises
-    //             .then(exercises => {
-    //                 console.log('Exercises:');
-    //                 console.log(exercises);
-    //                 return exercises
-    //             })
-    //     return (exercises + result)
-    //     })
-    //     .then(result => {
-
-    //         console.log('Result:');
-    //         console.log(result);
-            
-    //         res.send(result);
-    //     })
-    // .catch(err => console.log(err))
 
     //res.send(renderObject);
     //res.render('workouts/show',{workout:foundWorkout});
@@ -152,6 +112,8 @@ async function getExercises(exerciseIds){
     let query = await Exercise.find().where('_id').in(exerciseIds);
     return query;
 }
+
+
 
 
 // EXERCISES
