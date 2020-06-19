@@ -5,6 +5,8 @@ const bodyParser        = require('body-parser');
 const mongoose          = require('mongoose');
 const methodOverride    = require('method-override');
 const colors            = require('colors');
+const _                 = require('lodash');
+
 
 // CONFIGURATION
 app.use(express.static(__dirname + '/public')); // Assets directory
@@ -67,28 +69,39 @@ app.get('/workouts/:id', (req, res) => {
     //TODO MERGE OBJECTS
 
     let workoutId = req.params.id;
-    let renderObject = {};
-    let workoutObject;
+    let workoutObj;
 
     let workoutPromise = getWorkout(workoutId);
 
     workoutPromise
         .then(workout => {
-            console.log('Workout:');
+            console.log('Workout:'.red);
             console.log(workout);
-            workoutObject = workout;
+            workoutObj = workout;
             return workout
         })
         .then(workout => {
             exercisePromise = getExercises(workout.exercises);
             return exercisePromise
         })
-        .then(exercises => {
-            console.log('Exercises:');
-            console.log(exercises);
+        .then(exercisesObj => {
+            console.log('Exercises:'.yellow);
+            console.log(exercisesObj);
 
-            let merged = Object.assign(renderObject,workoutObject,exercises);
-            console.log('Merged'.yellow.bgBlue);
+            //! MERGES EVERYTHING
+            //let merged = {...workoutObject,...exercises};
+            let merged = Object.assign({},workoutObj,exercisesObj);
+
+            //! LODASH - MERGE NOT WORKING
+            // let merged = _.mergeWith(
+            //     {}, workoutObj, exercisesObj,
+            //     (a, b) => b === null ? a : undefined
+            // );
+
+
+            //let merged = merge(workoutObj,exercisesObj); // DEEP MERGE IS TOO MUCH
+
+            console.log('Merged'.black.bgBlue);
             console.log(merged);
 
             //TODO: CHECK AND SOLVE MERGED OBJECT
