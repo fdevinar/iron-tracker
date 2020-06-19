@@ -72,11 +72,8 @@ app.get('/workouts/:id', (req, res) => {
     let workoutObj;
 
     let workoutPromise = getWorkout(workoutId);
-
     workoutPromise
         .then(workout => {
-            console.log('Workout:'.red);
-            console.log(workout);
             workoutObj = workout;
             return workout
         })
@@ -84,36 +81,15 @@ app.get('/workouts/:id', (req, res) => {
             exercisePromise = getExercises(workout.exercises);
             return exercisePromise
         })
-        .then(exercisesObj => {
-            console.log('Exercises:'.yellow);
-            console.log(exercisesObj);
-
-            //! MERGES EVERYTHING
-            //let merged = {...workoutObject,...exercises};
+        .then(exercises => {
+            // PUTTING ARRAY INSIDE EXERCISES OBJECT
+            let exercisesObj = {exercises};
+            // MERGING WORKOUT AND EXERCISES OBJECTS
             let merged = Object.assign({},workoutObj,exercisesObj);
-
-            //! LODASH - MERGE NOT WORKING
-            // let merged = _.mergeWith(
-            //     {}, workoutObj, exercisesObj,
-            //     (a, b) => b === null ? a : undefined
-            // );
-
-
-            //let merged = merge(workoutObj,exercisesObj); // DEEP MERGE IS TOO MUCH
-
-            console.log('Merged'.black.bgBlue);
-            console.log(merged);
-
-            //TODO: CHECK AND SOLVE MERGED OBJECT
-
-            res.send(merged);
+            // RENDER MERGED OBJECT
+            res.render('workouts/show',{workout:merged});
         })
         .catch(err => console.log(err))
-
-
-
-    //res.send(renderObject);
-    //res.render('workouts/show',{workout:foundWorkout});
 });
 
 async function getWorkout(workoutId){

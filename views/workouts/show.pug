@@ -1,20 +1,25 @@
 include ../partials/header.pug
 
-- console.log(workout);
-
-form(action='../workouts/' + workout._id + '/exercises/new' method='post')
+form(action='../workouts/' + workout._doc._id + '/exercises/new' method='post')
     ul
-        input(type='hidden' name='days' value=workout.days)
-        input(type='hidden' name='id' value=workout._id)
-        li Days of Week #{workout.days}
+        input(type='hidden' name='days' value=workout._doc.days)
+        input(type='hidden' name='id' value=workout._doc._id)
+        li Days of Week #{workout._doc.days}
         
         span Exercises:
         for exercise in workout.exercises
-            li #{exercise}
+            ul
+                li Day: #{exercise.day}
+                li Order: #{exercise.order}
+                li Name: #{exercise.name}
+                li Reps: #{exercise.reps}
+                li Sets: #{exercise.sets}
+                li Weight: #{exercise.weight}
+                br
 
-        li ID: #{workout._id}
-        li Name: #{workout.name}
-        li Trainer: #{workout.trainer}
+        li ID: #{workout._doc._id}
+        li Name: #{workout._doc.name}
+        li Trainer: #{workout._doc.trainer}
     submit
         button Add Exercises
 
